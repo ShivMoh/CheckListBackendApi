@@ -1,19 +1,17 @@
-using web.models;
+using webapi.models;
 
 namespace webapi.models.kitchen
 {
     public class BrothPrep {
         public Guid id;
 
-        bool washMeats {get; set;} = false;
-        bool fillPots {get; set;} = false;
-        bool prepVegetables {get; set;} = false;
-        bool monitorPots {get; set;} = false;
-        bool boilBroths {get; set;} = false;
+        public bool washMeats {get; set;} = false;
+        public bool fillPots {get; set;} = false;
+        public bool prepVegetables {get; set;} = false;
+        public bool monitorPots {get; set;} = false;
+        public bool boilBroths {get; set;} = false;
 
-        public MainList mainList = new MainList();
-
-        public Guid mainListId;
+        public Guid mainListId {get; set;}
 
 
     }

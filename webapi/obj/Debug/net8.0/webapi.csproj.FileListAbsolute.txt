@@ -141,3 +141,4 @@
 /home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/Microsoft.Extensions.Identity.Core.dll
 /home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/Microsoft.Extensions.Identity.Stores.dll
 /home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
+/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/obj/Debug/net8.0/webapi.sourcelink.json

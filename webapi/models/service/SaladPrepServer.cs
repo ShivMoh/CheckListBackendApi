@@ -1,16 +1,14 @@
-using web.models;
+
 
 namespace webapi.models.kitchen
 {
     public class SaladPrepServer {
 
         public Guid id;
-        bool stirSaladVegeServerLights {get; set;} = false;
-        bool stirSalidVegeServerRemove {get; set;} = false;
+        public bool stirSaladVegeServerLights {get; set;} = false;
+        public bool stirSalidVegeServerRemove {get; set;} = false;
 
-        public MainList mainList = new MainList();
-
-        public Guid mainListId;
+        public Guid mainListId {get; set;}
 
     }
 }

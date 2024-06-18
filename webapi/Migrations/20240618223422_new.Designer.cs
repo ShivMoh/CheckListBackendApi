@@ -12,8 +12,8 @@ using webapi.datacontext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240617221248_new_2")]
-    partial class new_2
+    [Migration("20240618223422_new")]
+    partial class @new
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,15 +25,49 @@ namespace webapi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("web.models.MainList", b =>
+            modelBuilder.Entity("webapi.models.MainList", b =>
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("id");
 
                     b.ToTable("mainList");
+                });
+
+            modelBuilder.Entity("webapi.models.Signature", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("kitchenDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("kitchenName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("mainListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("serviceDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("serviceName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("mainListId")
+                        .IsUnique();
+
+                    b.ToTable("Signature");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.Aromatics", b =>
@@ -44,6 +78,12 @@ namespace webapi.Migrations
 
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("prepAromatics")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("readyDeserts")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
@@ -62,12 +102,18 @@ namespace webapi.Migrations
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("powerOnKitchenAcOnly")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("powerOnLights")
+                        .HasColumnType("bit");
+
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("ArrivalBasics");
+                    b.ToTable("arrivalBasics");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.BrothPrep", b =>
@@ -76,15 +122,59 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("boilBroths")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("fillPots")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("monitorPots")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepVegetables")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("washMeats")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("BrothPrep");
+                    b.ToTable("brothPrep");
+                });
+
+            modelBuilder.Entity("webapi.models.kitchen.CashierChecklist", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("checkCash")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ensureChange")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ensurePrinter")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("mainListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("tidyWorkstation")
+                        .HasColumnType("bit");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("mainListId")
+                        .IsUnique();
+
+                    b.ToTable("cashierChecklist");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.CleanRestaurantServer", b =>
@@ -93,15 +183,24 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("fixFurniture")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("sweep")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("wipeTables")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("CleanRestaurantServer");
+                    b.ToTable("cleanRestaurantServer");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.FinalPrep", b =>
@@ -110,15 +209,21 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("informServiceTeam")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("readyStation")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("FinalPrep");
+                    b.ToTable("finalPrep");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.FinalPrepServer", b =>
@@ -127,15 +232,24 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("listUnavailableItem")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("openingStandup")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("turnOnTv")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("FinalPrepServer");
+                    b.ToTable("finalPrepServer");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.PrepProteins", b =>
@@ -147,12 +261,45 @@ namespace webapi.Migrations
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("prepFish")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepMeatOrange")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepSkewers")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepTofu")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepWings")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepareChickenChashu")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepareChickenKatsu")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepareShrimpNobo")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepareShrimpTempura")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("prepareSousVideBeef")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("seasonSalmon")
+                        .HasColumnType("bit");
+
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("PrepProteins");
+                    b.ToTable("prepProteins");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.PrepSauces", b =>
@@ -161,15 +308,21 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("finishingSauce")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("senseiSauce")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("PrepSauces");
+                    b.ToTable("prepSauces");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.PrepSaucesServer", b =>
@@ -178,6 +331,9 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("coconutWater")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
@@ -186,7 +342,7 @@ namespace webapi.Migrations
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("PrepSaucesServer");
+                    b.ToTable("prepSaucesServer");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.SaladPrep", b =>
@@ -198,12 +354,15 @@ namespace webapi.Migrations
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("prepSaladVeg")
+                        .HasColumnType("bit");
+
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("SaladPrep");
+                    b.ToTable("saladPrep");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.SaladPrepServer", b =>
@@ -215,12 +374,18 @@ namespace webapi.Migrations
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("stirSaladVegeServerLights")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("stirSalidVegeServerRemove")
+                        .HasColumnType("bit");
+
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("SaladPrepServer");
+                    b.ToTable("saladPrepServer");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.StirFryVeg", b =>
@@ -232,12 +397,65 @@ namespace webapi.Migrations
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("stirFryVeg")
+                        .HasColumnType("bit");
+
                     b.HasKey("id");
 
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("StirFryVeg");
+                    b.ToTable("stirFryVeg");
+                });
+
+            modelBuilder.Entity("webapi.models.kitchen.StockOpeningCheckList", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("beverages")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("checkUtensils")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("coldCups")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("condiments")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("mainListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("ramenBar")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("straws")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("takeoutBox")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("teaBags")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("tissues")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("tissuesPacks")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("towels")
+                        .HasColumnType("bit");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("mainListId")
+                        .IsUnique();
+
+                    b.ToTable("stockOpeningCheckList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.ToppingsPrep", b =>
@@ -246,6 +464,12 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("blanchChoy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("friedRicePrep")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
@@ -254,15 +478,18 @@ namespace webapi.Migrations
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("ToppingsPrep");
+                    b.ToTable("toppingsPrep");
                 });
 
-            modelBuilder.Entity("webapi.models.service.AromaticServer", b =>
+            modelBuilder.Entity("webapi.models.service.AromaticsServer", b =>
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("cleanGlass")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("mainListId")
                         .HasColumnType("uniqueidentifier");
 
@@ -271,175 +498,177 @@ namespace webapi.Migrations
                     b.HasIndex("mainListId")
                         .IsUnique();
 
-                    b.ToTable("AromaticServer");
+                    b.ToTable("aromaticsServer");
+                });
+
+            modelBuilder.Entity("webapi.models.Signature", b =>
+                {
+                    b.HasOne("webapi.models.MainList", null)
+                        .WithOne("signature")
+                        .HasForeignKey("webapi.models.Signature", "mainListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.Aromatics", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("aromatics")
                         .HasForeignKey("webapi.models.kitchen.Aromatics", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.ArrivalBasics", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("arrivalBasics")
                         .HasForeignKey("webapi.models.kitchen.ArrivalBasics", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.BrothPrep", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("brothPrep")
                         .HasForeignKey("webapi.models.kitchen.BrothPrep", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("mainList");
+            modelBuilder.Entity("webapi.models.kitchen.CashierChecklist", b =>
+                {
+                    b.HasOne("webapi.models.MainList", null)
+                        .WithOne("cashierChecklist")
+                        .HasForeignKey("webapi.models.kitchen.CashierChecklist", "mainListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.CleanRestaurantServer", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("cleanRestaurantServer")
                         .HasForeignKey("webapi.models.kitchen.CleanRestaurantServer", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.FinalPrep", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("finalPrep")
                         .HasForeignKey("webapi.models.kitchen.FinalPrep", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.FinalPrepServer", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("finalPrepServer")
                         .HasForeignKey("webapi.models.kitchen.FinalPrepServer", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.PrepProteins", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("prepProteins")
                         .HasForeignKey("webapi.models.kitchen.PrepProteins", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.PrepSauces", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("prepSauces")
                         .HasForeignKey("webapi.models.kitchen.PrepSauces", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.PrepSaucesServer", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("prepSaucesServer")
                         .HasForeignKey("webapi.models.kitchen.PrepSaucesServer", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.SaladPrep", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("saladPrep")
                         .HasForeignKey("webapi.models.kitchen.SaladPrep", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.SaladPrepServer", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("saladPrepServer")
                         .HasForeignKey("webapi.models.kitchen.SaladPrepServer", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.StirFryVeg", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("stirFryVeg")
                         .HasForeignKey("webapi.models.kitchen.StirFryVeg", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("mainList");
+            modelBuilder.Entity("webapi.models.kitchen.StockOpeningCheckList", b =>
+                {
+                    b.HasOne("webapi.models.MainList", null)
+                        .WithOne("stockOpeningCheckList")
+                        .HasForeignKey("webapi.models.kitchen.StockOpeningCheckList", "mainListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("webapi.models.kitchen.ToppingsPrep", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
+                    b.HasOne("webapi.models.MainList", null)
                         .WithOne("toppingsPrep")
                         .HasForeignKey("webapi.models.kitchen.ToppingsPrep", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
-            modelBuilder.Entity("webapi.models.service.AromaticServer", b =>
+            modelBuilder.Entity("webapi.models.service.AromaticsServer", b =>
                 {
-                    b.HasOne("web.models.MainList", "mainList")
-                        .WithOne("aromaticServer")
-                        .HasForeignKey("webapi.models.service.AromaticServer", "mainListId")
+                    b.HasOne("webapi.models.MainList", null)
+                        .WithOne("aromaticsServer")
+                        .HasForeignKey("webapi.models.service.AromaticsServer", "mainListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("mainList");
                 });
 
-            modelBuilder.Entity("web.models.MainList", b =>
+            modelBuilder.Entity("webapi.models.MainList", b =>
                 {
-                    b.Navigation("aromaticServer")
+                    b.Navigation("aromatics")
                         .IsRequired();
 
-                    b.Navigation("aromatics")
+                    b.Navigation("aromaticsServer")
                         .IsRequired();
 
                     b.Navigation("arrivalBasics")
                         .IsRequired();
 
                     b.Navigation("brothPrep")
+                        .IsRequired();
+
+                    b.Navigation("cashierChecklist")
                         .IsRequired();
 
                     b.Navigation("cleanRestaurantServer")
@@ -466,7 +695,13 @@ namespace webapi.Migrations
                     b.Navigation("saladPrepServer")
                         .IsRequired();
 
+                    b.Navigation("signature")
+                        .IsRequired();
+
                     b.Navigation("stirFryVeg")
+                        .IsRequired();
+
+                    b.Navigation("stockOpeningCheckList")
                         .IsRequired();
 
                     b.Navigation("toppingsPrep")

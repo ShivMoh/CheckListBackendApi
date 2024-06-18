@@ -1,25 +1,23 @@
-using web.models;
+using webapi.models;
 
 namespace webapi.models.kitchen
 {
     public class PrepProteins {
         public Guid id;
 
-        bool prepFish {get; set;} = false;
-        bool prepMeatOrange {get; set;} = false;
-        bool prepSkewers {get; set;} = false;
-        bool prepTofu {get; set;} = false;
-        bool prepWings {get; set;} = false;
-        bool prepareChickenChashu {get; set;} = false;
-        bool prepareChickenKatsu {get; set;} = false;
-        bool prepareShrimpNobo {get; set;} = false;
-        bool prepareShrimpTempura {get; set;} = false;
-        bool prepareSousVideBeef {get; set;} = false;
-        bool seasonSalmon {get; set;} = false;
+        public bool prepFish {get; set;} = false;
+        public bool prepMeatOrange {get; set;} = false;
+        public bool prepSkewers {get; set;} = false;
+        public bool prepTofu {get; set;} = false;
+        public bool prepWings {get; set;} = false;
+        public bool prepareChickenChashu {get; set;} = false;
+        public bool prepareChickenKatsu {get; set;} = false;
+        public bool prepareShrimpNobo {get; set;} = false;
+        public bool prepareShrimpTempura {get; set;} = false;
+        public bool prepareSousVideBeef {get; set;} = false;
+        public bool seasonSalmon {get; set;} = false;
 
-        public MainList mainList = new MainList();
-
-        public Guid mainListId;
+        public Guid mainListId {get; set;}
 
 
     }

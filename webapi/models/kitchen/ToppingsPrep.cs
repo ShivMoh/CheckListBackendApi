@@ -1,16 +1,14 @@
-using web.models;
+using webapi.models;
 
 namespace webapi.models.kitchen
 {
     public class ToppingsPrep {
 
         public Guid id;
-        bool blanchChoy {get; set;} = false;
-        bool friedRicePrep {get; set;} = false;
+        public bool blanchChoy {get; set;} = false;
+        public bool friedRicePrep {get; set;} = false;
 
-        public MainList mainList = new MainList();
-
-        public Guid mainListId;
+        public Guid mainListId {get; set;}
 
  
     }

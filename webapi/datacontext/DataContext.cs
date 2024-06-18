@@ -1,6 +1,7 @@
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using web.models;
+using webapi.models;
 using webapi.models.kitchen;
 using webapi.models.service;
 
@@ -11,6 +12,24 @@ namespace webapi.datacontext
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Aromatics> aromatics => Set<Aromatics>();
+        public DbSet<ArrivalBasics> arrivalBasics => Set<ArrivalBasics>();
+        public DbSet<BrothPrep> brothPrep => Set<BrothPrep>();
+
+        public DbSet<FinalPrep> finalPrep => Set<FinalPrep>();
+        public DbSet<PrepProteins> prepProteins => Set<PrepProteins>();
+        public DbSet<PrepSauces> prepSauces => Set<PrepSauces>();
+        public DbSet<SaladPrep> saladPrep => Set<SaladPrep>();
+        public DbSet<StirFryVeg> stirFryVeg => Set<StirFryVeg>();
+        public DbSet<ToppingsPrep> toppingsPrep => Set<ToppingsPrep>();
+        public DbSet<AromaticsServer> aromaticsServer => Set<AromaticsServer>();
+        public DbSet<CleanRestaurantServer> cleanRestaurantServer => Set<CleanRestaurantServer>();
+        public DbSet<FinalPrepServer> finalPrepServer => Set<FinalPrepServer>();
+        public DbSet<PrepSaucesServer> prepSaucesServer => Set<PrepSaucesServer>();
+        public DbSet<SaladPrepServer> saladPrepServer => Set<SaladPrepServer>();
+        public DbSet<CashierChecklist> cashierChecklist => Set<CashierChecklist>();
+        public DbSet<StockOpeningCheckList> stockOpeningCheckList => Set<StockOpeningCheckList>();
+        public DbSet<Signature> signature => Set<Signature>();
+
         public DbSet<MainList> mainList => Set<MainList>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,7 +70,7 @@ namespace webapi.datacontext
                 .HasKey(e => e.id);    
 
 
-            modelBuilder.Entity<AromaticServer>()
+            modelBuilder.Entity<AromaticsServer>()
                 .HasKey(e => e.id);    
 
         
@@ -67,98 +86,128 @@ namespace webapi.datacontext
 
             modelBuilder.Entity<SaladPrepServer>()
                 .HasKey(e => e.id);    
+
+
+            modelBuilder.Entity<CashierChecklist>()
+                .HasKey(e => e.id);    
+
+            modelBuilder.Entity<StockOpeningCheckList>()
+                .HasKey(e => e.id);    
      
+            modelBuilder.Entity<Signature>()
+                .HasKey(e => e.id);   
+
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.aromatics)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<Aromatics>(e => e.mainListId)
                 .IsRequired();        
 
 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.arrivalBasics)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<ArrivalBasics>(e => e.mainListId)
                 .IsRequired();        
                 
             
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.brothPrep)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<BrothPrep>(e => e.mainListId)
                 .IsRequired();        
 
 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.finalPrep)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<FinalPrep>(e => e.mainListId)
                 .IsRequired();        
 
              modelBuilder.Entity<MainList>()
                 .HasOne(e => e.prepProteins)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<PrepProteins>(e => e.mainListId)
                 .IsRequired();        
 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.prepSauces)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<PrepSauces>(e => e.mainListId)
                 .IsRequired();        
 
             
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.saladPrep)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<SaladPrep>(e => e.mainListId)
                 .IsRequired();        
 
 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.stirFryVeg)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<StirFryVeg>(e => e.mainListId)
                 .IsRequired();        
                 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.toppingsPrep)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<ToppingsPrep>(e => e.mainListId)
                 .IsRequired();        
 
 
             modelBuilder.Entity<MainList>()
-                .HasOne(e => e.aromaticServer)
-                .WithOne(e => e.mainList)
-                .HasForeignKey<AromaticServer>(e => e.mainListId)
+                .HasOne(e => e.aromaticsServer)
+                .WithOne()
+                .HasForeignKey<AromaticsServer>(e => e.mainListId)
                 .IsRequired();        
                 
             
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.cleanRestaurantServer)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<CleanRestaurantServer>(e => e.mainListId)
                 .IsRequired();        
 
 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.finalPrepServer)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<FinalPrepServer>(e => e.mainListId)
                 .IsRequired();        
 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.prepSaucesServer)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<PrepSaucesServer>(e => e.mainListId)
                 .IsRequired();        
 
             modelBuilder.Entity<MainList>()
                 .HasOne(e => e.saladPrepServer)
-                .WithOne(e => e.mainList)
+                .WithOne()
                 .HasForeignKey<SaladPrepServer>(e => e.mainListId)
                 .IsRequired();        
+
+            modelBuilder.Entity<MainList>()
+                .HasOne(e => e.cashierChecklist)
+                .WithOne()
+                .HasForeignKey<CashierChecklist>(e => e.mainListId)
+                .IsRequired();        
+
+            modelBuilder.Entity<MainList>()
+                .HasOne(e => e.stockOpeningCheckList)
+                .WithOne()
+                .HasForeignKey<StockOpeningCheckList>(e => e.mainListId)
+                .IsRequired();        
+
+            modelBuilder.Entity<MainList>()
+                .HasOne(e => e.signature)
+                .WithOne()
+                .HasForeignKey<Signature>(e => e.mainListId)
+                .IsRequired();        
+
+
     
         }
     }

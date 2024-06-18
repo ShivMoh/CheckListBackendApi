@@ -15,14 +15,14 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("local"), sqlServerOptionsAction: sqlOptions => { sqlOptions.EnableRetryOnFailure(); });
 });
 
-// builder.Services.AddCors(options =>
-// {   
-//     options.AddDefaultPolicy(
-//         builder =>
-//         {
-//             builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-//         });
-// });
+builder.Services.AddCors(options =>
+{   
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 

@@ -1,16 +1,14 @@
-using web.models;
+using webapi.models;
 
 namespace webapi.models.kitchen
 {
     public class FinalPrep {
         public Guid id;
 
-        bool informServiceTeam {get; set;} = false;
-        bool readyStation {get; set;} = false;
+        public bool informServiceTeam {get; set;} = false;
+        public bool readyStation {get; set;} = false;
 
-        public MainList mainList = new MainList();
-
-        public Guid mainListId;
+        public Guid mainListId {get; set;}
 
     }
 }

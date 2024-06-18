@@ -1,11 +1,11 @@
 using webapi.models.kitchen;
 using webapi.models.service;
 
-namespace web.models
+namespace webapi.models
 {
     public class MainList {
 
-        public Guid id;
+        public Guid id {get;}
         public Aromatics aromatics {get; set;} = new Aromatics();
 
         public ArrivalBasics arrivalBasics {get; set;} = new ArrivalBasics();
@@ -17,12 +17,19 @@ namespace web.models
         public SaladPrep saladPrep {get; set;} = new SaladPrep();
         public StirFryVeg stirFryVeg {get; set;} = new StirFryVeg();
         public ToppingsPrep toppingsPrep {get; set;} = new ToppingsPrep();
-        public AromaticServer aromaticServer {get; set;} = new AromaticServer();
+        public AromaticsServer aromaticsServer {get; set;} = new AromaticsServer();
         public CleanRestaurantServer cleanRestaurantServer {get; set;} = new CleanRestaurantServer();
         public FinalPrepServer finalPrepServer {get; set;} = new FinalPrepServer();
         public PrepSaucesServer prepSaucesServer {get; set;} = new PrepSaucesServer();
 
         public SaladPrepServer saladPrepServer {get; set;} = new SaladPrepServer();
+
+        public CashierChecklist cashierChecklist {get; set;} = new CashierChecklist();
+        public StockOpeningCheckList stockOpeningCheckList {get; set;} = new StockOpeningCheckList();
+
+        public DateTime date {get; set;} = new DateTime();
+
+        public Signature signature {get; set;} = new Signature();
 
     }    
 }

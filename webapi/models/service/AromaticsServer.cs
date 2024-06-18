@@ -1,15 +1,12 @@
-using web.models;
 
 namespace webapi.models.service
 {
-    public class AromaticServer {
+    public class AromaticsServer {
 
         public Guid id;
-        bool cleanGlass {get; set;} = false;
+        public bool cleanGlass {get; set;} = false;
 
-        public MainList mainList = new MainList();
-
-        public Guid mainListId;
+        public Guid mainListId {get; set;}
 
  
     }
