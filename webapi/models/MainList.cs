@@ -31,5 +31,6 @@ namespace webapi.models
 
         public Signature signature {get; set;} = new Signature();
 
+        public Comment comment {get; set;} = new Comment();
     }    
 }

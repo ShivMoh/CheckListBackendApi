@@ -50,6 +50,7 @@ namespace webap.controllers
                 mainList.cashierChecklist = _context.cashierChecklist.Where(cashierChecklist => cashierChecklist.mainListId == mainListId).FirstOrDefault()!;
                 mainList.stockOpeningCheckList = _context.stockOpeningCheckList.Where(stockOpeningCheckList => stockOpeningCheckList.mainListId == mainListId).FirstOrDefault()!;
                 mainList.signature = _context.signature.Where(signature => signature.mainListId == mainListId).FirstOrDefault()!;
+                mainList.comment = _context.comment.Where(comment => comment.mainListId == mainListId).FirstOrDefault()!;
 
                 mainLists.Add(mainList);
             }
@@ -84,6 +85,7 @@ namespace webap.controllers
             mainList.cashierChecklist = _context.cashierChecklist.Where(cashierChecklist => cashierChecklist.mainListId == mainListId).FirstOrDefault()!;
             mainList.stockOpeningCheckList = _context.stockOpeningCheckList.Where(stockOpeningCheckList => stockOpeningCheckList.mainListId == mainListId).FirstOrDefault()!;
             mainList.signature = _context.signature.Where(signature => signature.mainListId == mainListId).FirstOrDefault()!;
+            mainList.comment = _context.comment.Where(comment => comment.mainListId == mainListId).FirstOrDefault()!;
 
             return Ok(mainList);
         }

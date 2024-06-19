@@ -29,6 +29,7 @@ namespace webapi.datacontext
         public DbSet<CashierChecklist> cashierChecklist => Set<CashierChecklist>();
         public DbSet<StockOpeningCheckList> stockOpeningCheckList => Set<StockOpeningCheckList>();
         public DbSet<Signature> signature => Set<Signature>();
+        public DbSet<Comment> comment => Set<Comment>();
 
         public DbSet<MainList> mainList => Set<MainList>();
 
@@ -95,6 +96,10 @@ namespace webapi.datacontext
                 .HasKey(e => e.id);    
      
             modelBuilder.Entity<Signature>()
+                .HasKey(e => e.id);   
+
+
+            modelBuilder.Entity<Comment>()
                 .HasKey(e => e.id);   
 
             modelBuilder.Entity<MainList>()
@@ -207,6 +212,11 @@ namespace webapi.datacontext
                 .HasForeignKey<Signature>(e => e.mainListId)
                 .IsRequired();        
 
+            modelBuilder.Entity<MainList>()
+                .HasOne(e => e.comment)
+                .WithOne()
+                .HasForeignKey<Comment>(e => e.mainListId)
+                .IsRequired();        
 
     
         }
