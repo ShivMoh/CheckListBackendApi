@@ -17,7 +17,7 @@ namespace webapi.models.kitchen
         public bool prepareSousVideBeef {get; set;} = false;
         public bool seasonSalmon {get; set;} = false;
 
-        public Guid mainListId {get; set;}
+        public Guid listId {get; set;}
 
 
     }

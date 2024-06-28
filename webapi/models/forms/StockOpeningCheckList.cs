@@ -1,5 +1,6 @@
+using webapi.models;
 
-namespace webapi.models.kitchen
+namespace webapi.models.form
 {
     public class StockOpeningCheckList
     {
@@ -16,7 +17,15 @@ namespace webapi.models.kitchen
         public bool tissuesPacks {get; set;}
         public bool towels {get; set;}
 
-        public Guid mainListId {get; set;}
+
+        public Comment comment {get; set;} = new Comment();
+
+        public Signature signature {get; set;} = new Signature();
+
+        public DateOnly date {get; set;} = new DateOnly();
+
+        public Guid commentId {get; set;}
+        public Guid signatureId {get; set;}
         
 
     }

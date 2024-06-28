@@ -6,7 +6,7 @@ namespace webapi.models.service
         public Guid id;
         public bool cleanGlass {get; set;} = false;
 
-        public Guid mainListId {get; set;}
+        public Guid listId {get; set;}
 
  
     }

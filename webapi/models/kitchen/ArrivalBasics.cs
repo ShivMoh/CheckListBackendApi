@@ -9,7 +9,7 @@ namespace webapi.models.kitchen
         public bool powerOnKitchenAcOnly {get; set;} = false;
 
 
-        public Guid mainListId {get; set;}
+        public Guid listId {get; set;}
 
     }
 }

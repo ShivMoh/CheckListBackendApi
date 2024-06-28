@@ -6,6 +6,6 @@ namespace webapi.models
         public Guid id;
         
         public string comment {get; set;} = String.Empty;
-        public Guid mainListId;
+   
     }
 }

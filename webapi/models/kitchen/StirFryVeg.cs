@@ -7,7 +7,7 @@ namespace webapi.models.kitchen
         public Guid id;
         public bool stirFryVeg {get; set;} = false;
 
-        public Guid mainListId {get; set;}
+        public Guid listId {get; set;}
 
  
     }

@@ -11,7 +11,7 @@ namespace webapi.models.kitchen
         public bool monitorPots {get; set;} = false;
         public bool boilBroths {get; set;} = false;
 
-        public Guid mainListId {get; set;}
+        public Guid listId {get; set;}
 
 
     }

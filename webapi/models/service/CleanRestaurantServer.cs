@@ -8,7 +8,7 @@ namespace webapi.models.kitchen
         public bool wipeTables {get; set;} = false;
         public bool fixFurniture {get; set;} = false;
  
-        public Guid mainListId {get; set;}
+        public Guid listId {get; set;}
 
     }
 }

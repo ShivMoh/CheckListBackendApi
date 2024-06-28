@@ -8,9 +8,7 @@ namespace webapi.models.kitchen
         public bool prepAromatics {get; set;} = false;
         public bool readyDeserts {get; set;} = false;
 
-        // public MainList mainList {get; set;}
-
-        public Guid mainListId {get; set;} 
+        public Guid listId {get; set;} 
 
     }
 }
