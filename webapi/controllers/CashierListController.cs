@@ -18,17 +18,7 @@ namespace webap.controllers
         [HttpPost]
         [Route(nameof(GetAllLists))]
         public async Task<IActionResult> GetAllLists() {
-            List<CashierChecklist> cashierLists = new List<CashierChecklist>(); 
-            List<CashierChecklist> lists = _context.cashierChecklist.OrderByDescending(list => list.date).ToList();
-
-            foreach (CashierChecklist cashierList in lists)
-            {
-                cashierList.comment = _context.comment.Where(list => list.id == cashierList.commentId).FirstOrDefault()!;
-                cashierList.signature = _context.signature.Where(list => list.id == cashierList.signatureId).FirstOrDefault()!;
-                cashierLists.Append(cashierList);
-            }
-            
-            return Ok(cashierLists);
+            return Ok(_context.cashierChecklist.ToList());
         }
         
         [HttpGet]

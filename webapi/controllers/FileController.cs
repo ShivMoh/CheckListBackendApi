@@ -53,5 +53,30 @@ namespace webap.controllers
             return Ok(files);
         }
 
+        [HttpGet]
+        [Route(nameof(GetFile))]
+        public async Task<IActionResult> GetFile(string listId) {
+            // var filePath = _context.fileType.Where(list => list.listId == new Guid(listId)).First().path;
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), listId);
+
+            if (!System.IO.File.Exists(fullPath)) {
+                return NotFound();
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(fullPath);
+            var contentType = "image/jpeg"; // Adjust this based on your file type
+
+            return File(fileBytes, contentType);
+            // return Ok(_context.fileType);
+        }
+
+        [HttpGet]
+        [Route(nameof(GetAllFileTypeForList))]
+        public async Task<IActionResult> GetAllFileTypeForList(string listId) {
+            return Ok(_context.fileType.Where(file => file.listId == new Guid(listId)));
+        }
+
+        
+
     }
 }

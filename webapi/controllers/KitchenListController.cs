@@ -78,7 +78,6 @@ namespace webap.controllers
         [HttpPost]
         [Route(nameof(Create))]
         public async Task<IActionResult> Create([FromBody] KitchenCheckList list) {
-       
             _context.Add(list);
             await _context.SaveChangesAsync();         
             return Ok(list);

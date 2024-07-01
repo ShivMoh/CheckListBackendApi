@@ -5,7 +5,7 @@ namespace webapi.models.form
 {
     public class StockOpeningCheckList
     {
-        public Guid id;
+        public Guid id {get;}
         public bool beverages {get; set;}
         public bool checkUtensils {get; set;}
         public bool coldCups {get; set;}

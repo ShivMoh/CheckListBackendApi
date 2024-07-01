@@ -5,7 +5,7 @@ namespace webapi.models.form
     public class CashierChecklist
     {
 
-        public Guid id;
+        public Guid id {get; }
 
         public bool checkCash {get; set;}
         public bool ensureChange {get; set;}
