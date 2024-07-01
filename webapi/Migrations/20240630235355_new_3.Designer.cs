@@ -12,8 +12,8 @@ using webapi.datacontext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240627213017_init")]
-    partial class init
+    [Migration("20240630235355_new_3")]
+    partial class new_3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,45 @@ namespace webapi.Migrations
                     b.ToTable("signature");
                 });
 
+            modelBuilder.Entity("webapi.models.files.FileType", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CashierChecklistid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("KitchenCheckListid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("file")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("fileData")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("fileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("listId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("uploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("CashierChecklistid");
+
+                    b.HasIndex("KitchenCheckListid");
+
+                    b.ToTable("fileType");
+                });
+
             modelBuilder.Entity("webapi.models.form.CashierChecklist", b =>
                 {
                     b.Property<Guid>("id")
@@ -67,7 +106,7 @@ namespace webapi.Migrations
                     b.Property<bool>("checkCash")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("commentId")
+                    b.Property<Guid?>("commentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateOnly>("date")
@@ -79,7 +118,7 @@ namespace webapi.Migrations
                     b.Property<bool>("ensurePrinter")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("signatureId")
+                    b.Property<Guid?>("signatureId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("tidyWorkstation")
@@ -88,10 +127,12 @@ namespace webapi.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("commentId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[commentId] IS NOT NULL");
 
                     b.HasIndex("signatureId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[signatureId] IS NOT NULL");
 
                     b.ToTable("cashierChecklist");
                 });
@@ -100,9 +141,6 @@ namespace webapi.Migrations
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("aromaticsServerid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("commentId")
@@ -115,8 +153,6 @@ namespace webapi.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
-
-                    b.HasIndex("aromaticsServerid");
 
                     b.HasIndex("commentId")
                         .IsUnique();
@@ -564,6 +600,17 @@ namespace webapi.Migrations
                     b.ToTable("aromaticsServer");
                 });
 
+            modelBuilder.Entity("webapi.models.files.FileType", b =>
+                {
+                    b.HasOne("webapi.models.form.CashierChecklist", null)
+                        .WithMany("files")
+                        .HasForeignKey("CashierChecklistid");
+
+                    b.HasOne("webapi.models.form.KitchenCheckList", null)
+                        .WithMany("files")
+                        .HasForeignKey("KitchenCheckListid");
+                });
+
             modelBuilder.Entity("webapi.models.form.CashierChecklist", b =>
                 {
                     b.HasOne("webapi.models.Comment", "comment")
@@ -581,12 +628,6 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("webapi.models.form.KitchenCheckList", b =>
                 {
-                    b.HasOne("webapi.models.service.AromaticsServer", "aromaticsServer")
-                        .WithMany()
-                        .HasForeignKey("aromaticsServerid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("webapi.models.Comment", "comment")
                         .WithOne()
                         .HasForeignKey("webapi.models.form.KitchenCheckList", "commentId");
@@ -594,8 +635,6 @@ namespace webapi.Migrations
                     b.HasOne("webapi.models.Signature", "signature")
                         .WithOne()
                         .HasForeignKey("webapi.models.form.KitchenCheckList", "signatureId");
-
-                    b.Navigation("aromaticsServer");
 
                     b.Navigation("comment");
 
@@ -758,6 +797,11 @@ namespace webapi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("webapi.models.form.CashierChecklist", b =>
+                {
+                    b.Navigation("files");
+                });
+
             modelBuilder.Entity("webapi.models.form.KitchenCheckList", b =>
                 {
                     b.Navigation("aromatics")
@@ -768,6 +812,8 @@ namespace webapi.Migrations
 
                     b.Navigation("brothPrep")
                         .IsRequired();
+
+                    b.Navigation("files");
 
                     b.Navigation("finalPrep")
                         .IsRequired();

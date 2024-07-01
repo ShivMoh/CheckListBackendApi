@@ -12,8 +12,8 @@ using webapi.datacontext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240628000947_new")]
-    partial class @new
+    [Migration("20240630235151_new_2")]
+    partial class new_2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,6 +56,40 @@ namespace webapi.Migrations
                     b.HasKey("id");
 
                     b.ToTable("signature");
+                });
+
+            modelBuilder.Entity("webapi.models.files.FileType", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("KitchenCheckListid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("file")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("fileData")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("fileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("listId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("uploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("KitchenCheckListid");
+
+                    b.ToTable("fileType");
                 });
 
             modelBuilder.Entity("webapi.models.form.CashierChecklist", b =>
@@ -561,6 +595,13 @@ namespace webapi.Migrations
                     b.ToTable("aromaticsServer");
                 });
 
+            modelBuilder.Entity("webapi.models.files.FileType", b =>
+                {
+                    b.HasOne("webapi.models.form.KitchenCheckList", null)
+                        .WithMany("files")
+                        .HasForeignKey("KitchenCheckListid");
+                });
+
             modelBuilder.Entity("webapi.models.form.CashierChecklist", b =>
                 {
                     b.HasOne("webapi.models.Comment", "comment")
@@ -757,6 +798,8 @@ namespace webapi.Migrations
 
                     b.Navigation("brothPrep")
                         .IsRequired();
+
+                    b.Navigation("files");
 
                     b.Navigation("finalPrep")
                         .IsRequired();

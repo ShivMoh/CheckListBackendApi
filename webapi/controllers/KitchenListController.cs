@@ -3,6 +3,7 @@ using webapi.models;
 using webapi.datacontext;
 using webapi.models.kitchen;
 using webapi.models.form;
+using webapi.models.files;
 
 namespace webap.controllers
 {
@@ -79,9 +80,22 @@ namespace webap.controllers
         public async Task<IActionResult> Create([FromBody] KitchenCheckList list) {
        
             _context.Add(list);
-            await _context.SaveChangesAsync();            
+            await _context.SaveChangesAsync();         
+            list.files = [];   
             return Ok(list);
         }
+
+
+        [HttpGet]
+        [Route(nameof(TestFile))]
+        public async Task<IActionResult> TestFile() {
+       
+                     
+            return Ok(_context.kitchenCheckList);
+        }
+
+        
+
 
     }
 }

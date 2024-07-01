@@ -1,3 +1,5 @@
+using webapi.models.files;
+
 namespace webapi.models.form
 {
     public class CashierChecklist
@@ -19,6 +21,7 @@ namespace webapi.models.form
         public Guid? commentId {get; set;}
         public Guid? signatureId {get; set;}
 
+        public ICollection<FileType>? files {get; set;} = [];
     }
 
 }

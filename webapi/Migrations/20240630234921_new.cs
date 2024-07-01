@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class @new : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,8 +46,8 @@ namespace webapi.Migrations
                     ensurePrinter = table.Column<bool>(type: "bit", nullable: false),
                     tidyWorkstation = table.Column<bool>(type: "bit", nullable: false),
                     date = table.Column<DateOnly>(type: "date", nullable: false),
-                    commentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    signatureId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    commentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    signatureId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,6 +59,30 @@ namespace webapi.Migrations
                         principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_cashierChecklist_signature_signatureId",
+                        column: x => x.signatureId,
+                        principalTable: "signature",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "kitchenCheckList",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    date = table.Column<DateOnly>(type: "date", nullable: false),
+                    signatureId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    commentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_kitchenCheckList", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_kitchenCheckList_comment_commentId",
+                        column: x => x.commentId,
+                        principalTable: "comment",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_kitchenCheckList_signature_signatureId",
                         column: x => x.signatureId,
                         principalTable: "signature",
                         principalColumn: "id");
@@ -118,137 +142,6 @@ namespace webapi.Migrations
                         principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_stockOpeningCheckList_signature_signatureId",
-                        column: x => x.signatureId,
-                        principalTable: "signature",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "aromaticsServer",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    cleanGlass = table.Column<bool>(type: "bit", nullable: false),
-                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_aromaticsServer", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_aromaticsServer_serviceCheckList_listId",
-                        column: x => x.listId,
-                        principalTable: "serviceCheckList",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "cleanRestaurantServer",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    sweep = table.Column<bool>(type: "bit", nullable: false),
-                    wipeTables = table.Column<bool>(type: "bit", nullable: false),
-                    fixFurniture = table.Column<bool>(type: "bit", nullable: false),
-                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_cleanRestaurantServer", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_cleanRestaurantServer_serviceCheckList_listId",
-                        column: x => x.listId,
-                        principalTable: "serviceCheckList",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "finalPrepServer",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    turnOnTv = table.Column<bool>(type: "bit", nullable: false),
-                    openingStandup = table.Column<bool>(type: "bit", nullable: false),
-                    listUnavailableItem = table.Column<bool>(type: "bit", nullable: false),
-                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_finalPrepServer", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_finalPrepServer_serviceCheckList_listId",
-                        column: x => x.listId,
-                        principalTable: "serviceCheckList",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "prepSaucesServer",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    coconutWater = table.Column<bool>(type: "bit", nullable: false),
-                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_prepSaucesServer", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_prepSaucesServer_serviceCheckList_listId",
-                        column: x => x.listId,
-                        principalTable: "serviceCheckList",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "saladPrepServer",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    stirSaladVegeServerLights = table.Column<bool>(type: "bit", nullable: false),
-                    stirSalidVegeServerRemove = table.Column<bool>(type: "bit", nullable: false),
-                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_saladPrepServer", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_saladPrepServer_serviceCheckList_listId",
-                        column: x => x.listId,
-                        principalTable: "serviceCheckList",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "kitchenCheckList",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    aromaticsServerid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    date = table.Column<DateOnly>(type: "date", nullable: false),
-                    signatureId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    commentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_kitchenCheckList", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_kitchenCheckList_aromaticsServer_aromaticsServerid",
-                        column: x => x.aromaticsServerid,
-                        principalTable: "aromaticsServer",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_kitchenCheckList_comment_commentId",
-                        column: x => x.commentId,
-                        principalTable: "comment",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_kitchenCheckList_signature_signatureId",
                         column: x => x.signatureId,
                         principalTable: "signature",
                         principalColumn: "id");
@@ -315,6 +208,28 @@ namespace webapi.Migrations
                         principalTable: "kitchenCheckList",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "fileType",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    file = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fileData = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    fileType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    uploadedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    KitchenCheckListid = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_fileType", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_fileType_kitchenCheckList_KitchenCheckListid",
+                        column: x => x.KitchenCheckListid,
+                        principalTable: "kitchenCheckList",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -444,6 +359,106 @@ namespace webapi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "aromaticsServer",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    cleanGlass = table.Column<bool>(type: "bit", nullable: false),
+                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_aromaticsServer", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_aromaticsServer_serviceCheckList_listId",
+                        column: x => x.listId,
+                        principalTable: "serviceCheckList",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "cleanRestaurantServer",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    sweep = table.Column<bool>(type: "bit", nullable: false),
+                    wipeTables = table.Column<bool>(type: "bit", nullable: false),
+                    fixFurniture = table.Column<bool>(type: "bit", nullable: false),
+                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cleanRestaurantServer", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_cleanRestaurantServer_serviceCheckList_listId",
+                        column: x => x.listId,
+                        principalTable: "serviceCheckList",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "finalPrepServer",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    turnOnTv = table.Column<bool>(type: "bit", nullable: false),
+                    openingStandup = table.Column<bool>(type: "bit", nullable: false),
+                    listUnavailableItem = table.Column<bool>(type: "bit", nullable: false),
+                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_finalPrepServer", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_finalPrepServer_serviceCheckList_listId",
+                        column: x => x.listId,
+                        principalTable: "serviceCheckList",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "prepSaucesServer",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    coconutWater = table.Column<bool>(type: "bit", nullable: false),
+                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_prepSaucesServer", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_prepSaucesServer_serviceCheckList_listId",
+                        column: x => x.listId,
+                        principalTable: "serviceCheckList",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "saladPrepServer",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    stirSaladVegeServerLights = table.Column<bool>(type: "bit", nullable: false),
+                    stirSalidVegeServerRemove = table.Column<bool>(type: "bit", nullable: false),
+                    listId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_saladPrepServer", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_saladPrepServer_serviceCheckList_listId",
+                        column: x => x.listId,
+                        principalTable: "serviceCheckList",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_aromatics_listId",
                 table: "aromatics",
@@ -472,19 +487,26 @@ namespace webapi.Migrations
                 name: "IX_cashierChecklist_commentId",
                 table: "cashierChecklist",
                 column: "commentId",
-                unique: true);
+                unique: true,
+                filter: "[commentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cashierChecklist_signatureId",
                 table: "cashierChecklist",
                 column: "signatureId",
-                unique: true);
+                unique: true,
+                filter: "[signatureId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cleanRestaurantServer_listId",
                 table: "cleanRestaurantServer",
                 column: "listId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_fileType_KitchenCheckListid",
+                table: "fileType",
+                column: "KitchenCheckListid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_finalPrep_listId",
@@ -497,11 +519,6 @@ namespace webapi.Migrations
                 table: "finalPrepServer",
                 column: "listId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_kitchenCheckList_aromaticsServerid",
-                table: "kitchenCheckList",
-                column: "aromaticsServerid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_kitchenCheckList_commentId",
@@ -589,6 +606,9 @@ namespace webapi.Migrations
                 name: "aromatics");
 
             migrationBuilder.DropTable(
+                name: "aromaticsServer");
+
+            migrationBuilder.DropTable(
                 name: "arrivalBasics");
 
             migrationBuilder.DropTable(
@@ -599,6 +619,9 @@ namespace webapi.Migrations
 
             migrationBuilder.DropTable(
                 name: "cleanRestaurantServer");
+
+            migrationBuilder.DropTable(
+                name: "fileType");
 
             migrationBuilder.DropTable(
                 name: "finalPrep");
@@ -631,13 +654,10 @@ namespace webapi.Migrations
                 name: "toppingsPrep");
 
             migrationBuilder.DropTable(
-                name: "kitchenCheckList");
-
-            migrationBuilder.DropTable(
-                name: "aromaticsServer");
-
-            migrationBuilder.DropTable(
                 name: "serviceCheckList");
+
+            migrationBuilder.DropTable(
+                name: "kitchenCheckList");
 
             migrationBuilder.DropTable(
                 name: "comment");

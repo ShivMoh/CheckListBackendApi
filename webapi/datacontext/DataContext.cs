@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using webapi.models;
+using webapi.models.files;
 using webapi.models.form;
 using webapi.models.kitchen;
 using webapi.models.service;
@@ -35,6 +36,8 @@ namespace webapi.datacontext
 
         public DbSet<Signature> signature => Set<Signature>();
         public DbSet<Comment> comment => Set<Comment>();
+
+        public DbSet<FileType> fileType => Set<FileType>();
         private void setUpServiceCheckList(ModelBuilder modelBuilder) {
 
             modelBuilder.Entity<ServiceCheckList>()
@@ -68,8 +71,6 @@ namespace webapi.datacontext
                 .WithOne()
                 .HasForeignKey<SaladPrepServer>(e => e.listId)
                 .IsRequired();        
-
-              
 
             modelBuilder.Entity<ServiceCheckList>()
                 .HasOne(e => e.signature)
@@ -143,7 +144,7 @@ namespace webapi.datacontext
                 .HasOne(e => e.toppingsPrep)
                 .WithOne()
                 .HasForeignKey<ToppingsPrep>(e => e.listId)
-                .IsRequired();     
+                .IsRequired();   
 
             modelBuilder.Entity<KitchenCheckList>()
                 .HasOne(e => e.signature)
@@ -188,18 +189,23 @@ namespace webapi.datacontext
                 .IsRequired(false);        
    
         }
+
         private void setUpPrimaryKeys(ModelBuilder modelBuilder) {
           
             modelBuilder.Entity<ServiceCheckList>()
+                .Ignore(e => e.files)
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<KitchenCheckList>()
+                .Ignore(e => e.files)
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<StockOpeningCheckList>()
+                .Ignore(e => e.files)
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<CashierChecklist>()
+                .Ignore(e => e.files)
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<Aromatics>()
@@ -259,6 +265,8 @@ namespace webapi.datacontext
             modelBuilder.Entity<Comment>()
                 .HasKey(e => e.id);   
 
+            modelBuilder.Entity<FileType>()
+                .HasKey(e => e.id);
         }
 
         

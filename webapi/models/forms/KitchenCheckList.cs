@@ -1,5 +1,6 @@
 using webapi.models.kitchen;
 using webapi.models.service;
+using webapi.models.files;
 
 namespace webapi.models.form
 {
@@ -22,6 +23,8 @@ namespace webapi.models.form
         public Guid signatureId {get; set;}
         public Comment comment {get; set;} = new Comment();
         public Guid commentId {get; set;}
+
+        public ICollection<FileType>? files {get; set;} = [];
 
     }
 }

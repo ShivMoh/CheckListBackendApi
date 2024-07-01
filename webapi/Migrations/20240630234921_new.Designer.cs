@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using webapi.datacontext;
 
@@ -11,9 +12,11 @@ using webapi.datacontext;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240630234921_new")]
+    partial class @new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,6 +64,9 @@ namespace webapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("KitchenCheckListid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("file")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -80,6 +86,8 @@ namespace webapi.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("id");
+
+                    b.HasIndex("KitchenCheckListid");
 
                     b.ToTable("fileType");
                 });
@@ -587,6 +595,13 @@ namespace webapi.Migrations
                     b.ToTable("aromaticsServer");
                 });
 
+            modelBuilder.Entity("webapi.models.files.FileType", b =>
+                {
+                    b.HasOne("webapi.models.form.KitchenCheckList", null)
+                        .WithMany("files")
+                        .HasForeignKey("KitchenCheckListid");
+                });
+
             modelBuilder.Entity("webapi.models.form.CashierChecklist", b =>
                 {
                     b.HasOne("webapi.models.Comment", "comment")
@@ -783,6 +798,8 @@ namespace webapi.Migrations
 
                     b.Navigation("brothPrep")
                         .IsRequired();
+
+                    b.Navigation("files");
 
                     b.Navigation("finalPrep")
                         .IsRequired();
