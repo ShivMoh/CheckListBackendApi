@@ -193,19 +193,19 @@ namespace webapi.datacontext
         private void setUpPrimaryKeys(ModelBuilder modelBuilder) {
           
             modelBuilder.Entity<ServiceCheckList>()
-                .Ignore(e => e.files)
+            
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<KitchenCheckList>()
-                .Ignore(e => e.files)
+             
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<StockOpeningCheckList>()
-                .Ignore(e => e.files)
+              
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<CashierChecklist>()
-                .Ignore(e => e.files)
+       
                 .HasKey(e => e.id);
 
             modelBuilder.Entity<Aromatics>()

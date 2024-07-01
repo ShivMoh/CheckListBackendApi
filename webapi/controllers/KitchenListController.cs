@@ -81,19 +81,11 @@ namespace webap.controllers
        
             _context.Add(list);
             await _context.SaveChangesAsync();         
-            list.files = [];   
             return Ok(list);
         }
 
 
-        [HttpGet]
-        [Route(nameof(TestFile))]
-        public async Task<IActionResult> TestFile() {
        
-                     
-            return Ok(_context.kitchenCheckList);
-        }
-
         
 
 

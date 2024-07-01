@@ -22,7 +22,5 @@ namespace webapi.models.form
         public Comment comment {get; set;} = new Comment();
         public Guid commentId {get; set;}
 
-        public ICollection<FileType>? files {get; set;} = [];
-
     }
 }
