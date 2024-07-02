@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+lQ2jSDcSuQ=",
+  "dgSpecHash": "2loBWqbDiQk=",
   "success": true,
-  "projectFilePath": "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/webapi.csproj",
+  "projectFilePath": "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/webapi.csproj",
   "expectedPackageFiles": [
     "/home/shivesh/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/home/shivesh/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
@@ -93,9 +93,9 @@
     "/home/shivesh/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
     "/home/shivesh/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/home/shivesh/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
+    "/home/shivesh/.nuget/packages/microsoft.netcore.app.ref/8.0.6/microsoft.netcore.app.ref.8.0.6.nupkg.sha512",
     "/home/shivesh/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.6/microsoft.aspnetcore.app.ref.8.0.6.nupkg.sha512",
-    "/home/shivesh/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.6/microsoft.netcore.app.host.linux-x64.8.0.6.nupkg.sha512",
-    "/home/shivesh/.nuget/packages/microsoft.netcore.app.ref/8.0.6/microsoft.netcore.app.ref.8.0.6.nupkg.sha512"
+    "/home/shivesh/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.6/microsoft.netcore.app.host.linux-x64.8.0.6.nupkg.sha512"
   ],
   "logs": []
 }
