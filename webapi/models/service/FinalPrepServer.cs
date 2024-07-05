@@ -1,14 +1,12 @@
-
+using webapi.models.types;
 namespace webapi.models.kitchen
 {
-    public class FinalPrepServer {
+    public class FinalPrepServer : GenericAttributeType {
 
-        public Guid id;
         public bool turnOnTv {get; set;} = false;
         public bool openingStandup {get; set;} = false;
-        public bool listUnavailableItem {get; set;} = false;
+        public bool listUnavailableItems {get; set;} = false;
 
-        public Guid listId {get; set;}
 
  
     }

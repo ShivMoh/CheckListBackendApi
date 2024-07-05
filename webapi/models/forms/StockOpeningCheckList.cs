@@ -1,34 +1,11 @@
 using webapi.models;
-using webapi.models.files;
+using webapi.models.kitchen;
+using webapi.models.types;
 
 namespace webapi.models.form
 {
-    public class StockOpeningCheckList
+    public class StockOpeningCheckList : GenericListType
     {
-        public Guid id {get;}
-        public bool beverages {get; set;}
-        public bool checkUtensils {get; set;}
-        public bool coldCups {get; set;}
-        public bool condiments {get; set;}
-        public bool ramenBar {get; set;}
-        public bool straws {get; set;}
-        public bool takeoutBox {get; set;}
-        public bool teaBags {get; set;}
-        public bool tissues {get; set;}
-        public bool tissuesPacks {get; set;}
-        public bool towels {get; set;}
-
-
-        public Comment comment {get; set;} = new Comment();
-
-        public Signature signature {get; set;} = new Signature();
-
-        public DateOnly date {get; set;} = new DateOnly();
-
-        public Guid commentId {get; set;}
-        public Guid signatureId {get; set;}
-        
-
-
+      public StockTask stockTask {get; set;} = new StockTask();
     }
 }

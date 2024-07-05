@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using webapi.datacontext;
+using MapsterMapper;
+using Mapster;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,11 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var config = TypeAdapterConfig.GlobalSettings;
+config.Scan(Assembly.GetExecutingAssembly());
+services.AddSingleton(config);
+services.AddScoped<IMapper, ServiceMapper>();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {

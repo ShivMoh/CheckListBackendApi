@@ -1,12 +1,10 @@
-using webapi.models;
+using webapi.models.types;
 
 namespace webapi.models.kitchen
 {
-    public class PrepSaucesServer {
+    public class PrepSaucesServer : GenericAttributeType {
 
-        public Guid id;
         public bool coconutWater {get; set;} = false;
-        public Guid listId {get; set;}
 
     }
 }

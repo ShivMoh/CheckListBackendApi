@@ -3,7 +3,7 @@ using webapi.models;
 using webapi.datacontext;
 using webapi.models.kitchen;
 using webapi.models.form;
-using webapi.models.files;
+using webapi.models.types;
 
 namespace webap.controllers
 {
@@ -19,45 +19,64 @@ namespace webap.controllers
 
          [HttpPost]
         [Route(nameof(UploadFile))]
-        public async Task<IActionResult> UploadFile([FromForm] IFormFile[] files, [FromForm] string listId) {
-            foreach (IFormFile file in files)
-            {
-                FileType fileType = new FileType();
-
-
-                                
-                var folderName = Path.Combine("Resources", new DateOnly().ToString().Replace("/", "-"));
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
-                if (!Directory.Exists(filePath))
-                {
-                    Directory.CreateDirectory(filePath);
-                }
-
-                var uniqueFileName = file.FileName;
-                var dbPath = Path.Combine(folderName, uniqueFileName);
-
-                using (var fileStream = new FileStream(Path.Combine(filePath, uniqueFileName), FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
-
-                fileType.name = file.Name;
-                fileType.path = dbPath;
-                fileType.listId = new Guid(listId);   
+        public async Task<IActionResult> UploadFile(
+            [FromForm] IFormFile file, 
+            [FromForm] string listReferenceId, 
+            [FromForm] string fileContainerTypeId,
+            [FromForm] string label
+        ) {
+           
+         
                 
-                _context.fileType.Add(fileType);
-                await _context.SaveChangesAsync();
+            var folderName = Path.Combine("Resources", new DateTime().ToString().Replace("/", "-"));
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
             }
 
-            return Ok(files);
+            var uniqueFileName = file.FileName;
+            var dbPath = Path.Combine(folderName, uniqueFileName);
+
+            using (var fileStream = new FileStream(Path.Combine(filePath, uniqueFileName), FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            List<FileType> fileTypes = _context.fileType.Where(file => file.filesContainerTypeId == new Guid(fileContainerTypeId)).ToList();
+            FileType fileType;
+            if (fileTypes.Any(file => file.label == label)) {
+                fileType = fileTypes.Where(file => file.label == label).FirstOrDefault()!;
+                fileType.name = file.Name;
+                fileType.path = dbPath;
+                fileType.listReferenceId = new Guid(listReferenceId);
+                fileType.filesContainerTypeId = new Guid(fileContainerTypeId);
+                fileType.label = label;
+                
+                _context.fileType.Update(fileType);
+            } else {
+                fileType = new FileType();
+                fileType.name = file.Name;
+                fileType.path = dbPath;
+                fileType.listReferenceId = new Guid(listReferenceId);
+                fileType.filesContainerTypeId = new Guid(fileContainerTypeId);
+                fileType.label = label;
+                
+                _context.fileType.Add(fileType);
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok(fileType);
+
         }
 
+ 
         [HttpGet]
         [Route(nameof(GetFile))]
-        public async Task<IActionResult> GetFile(string listId) {
+        public async Task<IActionResult> GetFile(string filePath) {
             // var filePath = _context.fileType.Where(list => list.listId == new Guid(listId)).First().path;
-            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), listId);
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), filePath);
 
             if (!System.IO.File.Exists(fullPath)) {
                 return NotFound();
@@ -72,8 +91,14 @@ namespace webap.controllers
 
         [HttpGet]
         [Route(nameof(GetAllFileTypeForList))]
-        public async Task<IActionResult> GetAllFileTypeForList(string listId) {
-            return Ok(_context.fileType.Where(file => file.listId == new Guid(listId)));
+        public async Task<IActionResult> GetAllFileTypeForList([FromQuery] string listReferenceTypeId) {
+            return Ok(_context.fileType.Where(file => file.listReferenceId == new Guid(listReferenceTypeId)));
+        }
+
+        [HttpGet]
+        [Route(nameof(GetAllFileTypeForAttribute))]
+        public async Task<IActionResult> GetAllFileTypeForAttribute([FromQuery] string fileContainerTypeId) {
+            return Ok(_context.fileType.Where(file => file.filesContainerTypeId == new Guid(fileContainerTypeId)));
         }
 
         

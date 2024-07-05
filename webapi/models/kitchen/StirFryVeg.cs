@@ -1,14 +1,10 @@
-using webapi.models;
+using webapi.models.types;
 
 namespace webapi.models.kitchen
 {
-    public class StirFryVeg {
+    public class StirFryVeg : GenericAttributeType{
 
-        public Guid id;
         public bool stirFryVeg {get; set;} = false;
-
-        public Guid listId {get; set;}
-
  
     }
 }

@@ -1,14 +1,11 @@
-using webapi.models;
+using webapi.models.types;
 
 namespace webapi.models.kitchen
 {
-    public class FinalPrep {
-        public Guid id;
+    public class FinalPrep : GenericAttributeType {
 
         public bool informServiceTeam {get; set;} = false;
         public bool readyStation {get; set;} = false;
-
-        public Guid listId {get; set;}
 
     }
 }

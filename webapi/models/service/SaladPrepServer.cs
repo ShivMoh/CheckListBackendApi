@@ -1,14 +1,11 @@
 
-
+using webapi.models.types;
 namespace webapi.models.kitchen
 {
-    public class SaladPrepServer {
+    public class SaladPrepServer : GenericAttributeType{
 
-        public Guid id;
         public bool stirSaladVegeServerLights {get; set;} = false;
-        public bool stirSalidVegeServerRemove {get; set;} = false;
-
-        public Guid listId {get; set;}
+        public bool stirSaladVegeServerRemove {get; set;} = false;
 
     }
 }

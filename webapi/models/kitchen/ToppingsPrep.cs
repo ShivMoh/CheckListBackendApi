@@ -1,15 +1,11 @@
-using webapi.models;
+using webapi.models.types;
 
 namespace webapi.models.kitchen
 {
-    public class ToppingsPrep {
+    public class ToppingsPrep : GenericAttributeType {
 
-        public Guid id;
         public bool blanchChoy {get; set;} = false;
         public bool friedRicePrep {get; set;} = false;
-
-        public Guid listId {get; set;}
-
  
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/webapi.csproj": {}
+    "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/webapi.csproj": {}
   },
   "projects": {
-    "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/webapi.csproj": {
+    "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/webapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/webapi.csproj",
+        "projectUniqueName": "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/webapi.csproj",
         "projectName": "webapi",
-        "projectPath": "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/webapi.csproj",
+        "projectPath": "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/webapi.csproj",
         "packagesPath": "/home/shivesh/.nuget/packages/",
-        "outputPath": "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/obj/",
+        "outputPath": "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/shivesh/.nuget/NuGet/NuGet.Config"
@@ -43,6 +43,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Mapster": {
+              "target": "Package",
+              "version": "[7.4.1-pre01, )"
+            },
+            "Mapster.DependencyInjection": {
+              "target": "Package",
+              "version": "[1.0.2-pre01, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.6, )"

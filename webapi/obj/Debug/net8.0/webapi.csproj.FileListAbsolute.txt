@@ -144,3 +144,6 @@
 /home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/obj/Debug/net8.0/webapi.sourcelink.json
 /home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/MySqlConnector.dll
 /home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/Pomelo.EntityFrameworkCore.MySql.dll
+/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/Mapster.dll
+/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/Mapster.Core.dll
+/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/bin/Debug/net8.0/Mapster.DependencyInjection.dll

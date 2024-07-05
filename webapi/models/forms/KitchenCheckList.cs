@@ -1,11 +1,11 @@
 using webapi.models.kitchen;
 using webapi.models.service;
-using webapi.models.files;
+using webapi.models.types;
 
 namespace webapi.models.form
 {
-    public class KitchenCheckList {
-        public Guid id {get;}
+    public class KitchenCheckList : GenericListType {
+    
         public Aromatics aromatics {get; set;} = new Aromatics();
         public ArrivalBasics arrivalBasics {get; set;} = new ArrivalBasics();
         public BrothPrep brothPrep {get; set;} = new BrothPrep();
@@ -16,15 +16,5 @@ namespace webapi.models.form
         public StirFryVeg stirFryVeg {get; set;} = new StirFryVeg();
         public ToppingsPrep toppingsPrep {get; set;} = new ToppingsPrep();
     
-        public DateOnly date {get; set;} = new DateOnly();
-
-        public Signature signature {get; set;} = new Signature();
-
-        public Guid signatureId {get; set;}
-        public Comment comment {get; set;} = new Comment();
-        public Guid commentId {get; set;}
-
-      
-
     }
 }

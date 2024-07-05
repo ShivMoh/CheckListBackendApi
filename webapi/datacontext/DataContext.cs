@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using webapi.models;
-using webapi.models.files;
 using webapi.models.form;
 using webapi.models.kitchen;
 using webapi.models.service;
+using webapi.models.types;
 
 namespace webapi.datacontext
 {
@@ -33,11 +33,16 @@ namespace webapi.datacontext
         public DbSet<ServiceCheckList> serviceCheckList => Set<ServiceCheckList>();
         public DbSet<CashierChecklist> cashierChecklist => Set<CashierChecklist>();
         public DbSet<StockOpeningCheckList> stockOpeningCheckList => Set<StockOpeningCheckList>();
+        public DbSet<CashierTask> cashierTask => Set<CashierTask>();
+        public DbSet<StockTask> stockTask => Set<StockTask>();
 
         public DbSet<Signature> signature => Set<Signature>();
         public DbSet<Comment> comment => Set<Comment>();
 
         public DbSet<FileType> fileType => Set<FileType>();
+        public DbSet<FileContainerType> fileContainerType => Set<FileContainerType>();
+        public DbSet<ListReferenceType> listReferenceType => Set<ListReferenceType>();
+
         private void setUpServiceCheckList(ModelBuilder modelBuilder) {
 
             modelBuilder.Entity<ServiceCheckList>()
@@ -162,6 +167,13 @@ namespace webapi.datacontext
         }
 
         private void setUpCashierCheckList(ModelBuilder modelBuilder) {
+
+            modelBuilder.Entity<CashierChecklist>()
+                .HasOne(e => e.cashierTask)
+                .WithOne()
+                .HasForeignKey<CashierTask>(e => e.listId)
+                .IsRequired();   
+
             modelBuilder.Entity<CashierChecklist>()
                 .HasOne(e => e.signature)
                 .WithOne()
@@ -176,6 +188,14 @@ namespace webapi.datacontext
         }
 
         private void setUpStockOpeningCheckList(ModelBuilder modelBuilder) {
+
+
+            modelBuilder.Entity<StockOpeningCheckList>()
+                .HasOne(e => e.stockTask)
+                .WithOne()
+                .HasForeignKey<StockTask>(e => e.listId)
+                .IsRequired();   
+
             modelBuilder.Entity<StockOpeningCheckList>()
                 .HasOne(e => e.signature)
                 .WithOne()
@@ -193,20 +213,49 @@ namespace webapi.datacontext
         private void setUpPrimaryKeys(ModelBuilder modelBuilder) {
           
             modelBuilder.Entity<ServiceCheckList>()
-            
                 .HasKey(e => e.id);
 
+        
             modelBuilder.Entity<KitchenCheckList>()
-             
                 .HasKey(e => e.id);
+
+                 
+            modelBuilder.Entity<StockOpeningCheckList>()
+                .HasKey(e => e.id);
+         
+            modelBuilder.Entity<CashierChecklist>()
+                .HasKey(e => e.id);
+
+            modelBuilder.Entity<ServiceCheckList>()
+                .HasOne(e => e.listReferenceType)
+                .WithOne()
+                .HasForeignKey<ServiceCheckList>(e => e.listReferenceTypeId)
+                .IsRequired();
+                
+            modelBuilder.Entity<KitchenCheckList>()
+                .HasOne(e => e.listReferenceType)
+                .WithOne()
+                .HasForeignKey<KitchenCheckList>(e => e.listReferenceTypeId)
+                .IsRequired();
 
             modelBuilder.Entity<StockOpeningCheckList>()
-              
-                .HasKey(e => e.id);
+                .HasOne(e => e.listReferenceType)
+                .WithOne()
+                .HasForeignKey<StockOpeningCheckList>(e => e.listReferenceTypeId)
+                .IsRequired();
 
             modelBuilder.Entity<CashierChecklist>()
-       
-                .HasKey(e => e.id);
+                .HasOne(e => e.listReferenceType)
+                .WithOne()
+                .HasForeignKey<CashierChecklist>(e => e.listReferenceTypeId)
+                .IsRequired();
+
+            modelBuilder.Entity<StockTask>()
+                .HasKey(e => e.id);    
+
+            modelBuilder.Entity<CashierTask>()
+                .HasKey(e => e.id);    
+
 
             modelBuilder.Entity<Aromatics>()
                 .HasKey(e => e.id);    
@@ -267,6 +316,129 @@ namespace webapi.datacontext
 
             modelBuilder.Entity<FileType>()
                 .HasKey(e => e.id);
+
+            modelBuilder.Entity<ListReferenceType>()
+                .HasMany(e => e.files)
+                .WithOne()
+                .HasForeignKey(e => e.listReferenceId)
+                .IsRequired();
+
+            modelBuilder.Entity<FileContainerType>()
+                .HasMany(e => e.files)
+                .WithOne()
+                .HasForeignKey(e => e.filesContainerTypeId)
+                .IsRequired();
+                
+            modelBuilder.Entity<CashierTask>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<CashierTask>(e => e.fileContainerTypeId)
+                .IsRequired();  
+                
+            modelBuilder.Entity<StockTask>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<StockTask>(e => e.fileContainerTypeId)
+                .IsRequired();  
+
+            modelBuilder.Entity<Aromatics>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<Aromatics>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+
+            modelBuilder.Entity<ArrivalBasics>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<ArrivalBasics>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<BrothPrep>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<BrothPrep>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<FinalPrep>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<FinalPrep>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<PrepProteins>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<PrepProteins>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<PrepSauces>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<PrepSauces>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<SaladPrep>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<SaladPrep>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<StirFryVeg>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<StirFryVeg>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<ToppingsPrep>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<ToppingsPrep>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<AromaticsServer>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<AromaticsServer>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<CleanRestaurantServer>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<CleanRestaurantServer>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<FinalPrepServer>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<FinalPrepServer>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+            modelBuilder.Entity<PrepSaucesServer>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<PrepSaucesServer>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+            modelBuilder.Entity<SaladPrepServer>()
+                .HasOne(e => e.fileContainer)
+                .WithOne()
+                .HasForeignKey<SaladPrepServer>(e => e.fileContainerTypeId)
+                .IsRequired();   
+
+   
+   
         }
 
         

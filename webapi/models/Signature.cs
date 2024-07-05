@@ -5,9 +5,6 @@ namespace webapi.models
 
         public Guid id;
         public string name {get; set;} = String.Empty;
-
-        public DateOnly date {get; set;} = new DateOnly();
-
    
     }
 }
