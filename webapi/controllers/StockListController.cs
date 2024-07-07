@@ -24,7 +24,7 @@ namespace webap.controllers
 
         public async Task<IActionResult> GetAllLists() {
             List<StockOpeningCheckList> stockLists = new List<StockOpeningCheckList>(); 
-            List<StockOpeningCheckList> lists = _context.stockOpeningCheckList.OrderByDescending(list => list.endDate).ToList();
+            List<StockOpeningCheckList> lists = _context.stockOpeningCheckList.Where(list => list.submitted == true).OrderByDescending(list => list.endDate).ToList();
             foreach (StockOpeningCheckList stockList in lists)
             {
                 stockList.stockTask = _context.stockTask.Where(list => list.listId == stockList.id).FirstOrDefault()!;
@@ -54,7 +54,7 @@ namespace webap.controllers
         [Route(nameof(CreateBlank))]
         public async Task<IActionResult> CreateBlank() {
             StockOpeningCheckList stockOpeningList = new StockOpeningCheckList();
-            stockOpeningList.startDate = DateTime.UtcNow;
+            stockOpeningList.startDate = DateTime.Now;
             stockOpeningList.submitted = false;
             _context.Add(stockOpeningList);
             await _context.SaveChangesAsync();         
@@ -84,7 +84,7 @@ namespace webap.controllers
             _context.signature.Update(signature);
             _context.comment.Update(comment);
 
-            stockOpeningCheckList.endDate = DateTime.UtcNow;
+            stockOpeningCheckList.endDate = DateTime.Now;
             stockOpeningCheckList.submitted = true;
 
             _context.Update(stockOpeningCheckList);

@@ -34,7 +34,7 @@ namespace webap.controllers
 
         public async Task<IActionResult> GetAllLists() {
             List<KitchenCheckList> mainLists = new List<KitchenCheckList>();
-            List<KitchenCheckList> lists = _context.kitchenCheckList.OrderByDescending(list => list.endDate).ToList();
+            List<KitchenCheckList> lists = _context.kitchenCheckList.Where(list => list.submitted == true).OrderByDescending(list => list.endDate).ToList();
             foreach (KitchenCheckList mainList in lists)
             {
                 Guid listId = mainList.id; 
@@ -94,7 +94,7 @@ namespace webap.controllers
         [Route(nameof(CreateBlank))]
         public async Task<IActionResult> CreateBlank() {
             KitchenCheckList kitchenCheckList = new KitchenCheckList();
-            kitchenCheckList.startDate = DateTime.UtcNow;
+            kitchenCheckList.startDate = DateTime.Now;
             kitchenCheckList.submitted = false;
             _context.Add(kitchenCheckList);
             await _context.SaveChangesAsync();         
@@ -158,7 +158,7 @@ namespace webap.controllers
             prepSauces.listId = list.id;
             prepSauces.fileContainer = _context.fileContainerType.Where(container => container.id == prepSauces.fileContainerTypeId).FirstOrDefault()!;
 
-            kitchenCheckList.endDate = DateTime.UtcNow;
+            kitchenCheckList.endDate = DateTime.Now;
             kitchenCheckList.submitted = true;
 
          

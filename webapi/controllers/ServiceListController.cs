@@ -26,7 +26,7 @@ namespace webap.controllers
 
         public async Task<IActionResult> GetAllLists() {
             List<ServiceCheckList> mainLists = new List<ServiceCheckList>();
-            List<ServiceCheckList> lists = _context.serviceCheckList.OrderByDescending(list => list.endDate).ToList();
+            List<ServiceCheckList> lists = _context.serviceCheckList.Where(list => list.submitted == true).OrderByDescending(list => list.endDate).ToList();
             foreach (ServiceCheckList mainList in lists)
             {
                 Guid listId = mainList.id; 
@@ -77,7 +77,7 @@ namespace webap.controllers
         [Route(nameof(CreateBlank))]
         public async Task<IActionResult> CreateBlank() {
             ServiceCheckList serviceCheckList = new ServiceCheckList();
-            serviceCheckList.startDate = DateTime.UtcNow;
+            serviceCheckList.startDate = DateTime.Now;
             serviceCheckList.submitted = false;
             _context.Add(serviceCheckList);
             await _context.SaveChangesAsync();         
@@ -121,7 +121,7 @@ namespace webap.controllers
             saladPrepServer.listId = list.id;
             saladPrepServer.fileContainer = _context.fileContainerType.Where(container => container.id == saladPrepServer.fileContainerTypeId).FirstOrDefault()!;
 
-            serviceCheckList.endDate = DateTime.UtcNow;
+            serviceCheckList.endDate = DateTime.Now;
             serviceCheckList.submitted = true;
 
          

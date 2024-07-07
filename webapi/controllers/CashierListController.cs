@@ -24,7 +24,7 @@ namespace webap.controllers
         public async Task<IActionResult> GetAllLists() {
 
             List<CashierChecklist> mainLists = new List<CashierChecklist>();
-            List<CashierChecklist> lists = _context.cashierChecklist.OrderByDescending(list => list.endDate).ToList();
+            List<CashierChecklist> lists = _context.cashierChecklist.Where(list => list.submitted == true).OrderByDescending(list => list.endDate).ToList();
             foreach (CashierChecklist mainList in lists)
             {
                 Guid listId = mainList.id; 
@@ -54,7 +54,7 @@ namespace webap.controllers
         [Route(nameof(CreateBlank))]
         public async Task<IActionResult> CreateBlank() {
             CashierChecklist cashierChecklist = new CashierChecklist();
-            cashierChecklist.startDate = DateTime.UtcNow;
+            cashierChecklist.startDate = DateTime.Now;
             cashierChecklist.submitted = false;
             _context.Add(cashierChecklist);
             await _context.SaveChangesAsync();         
