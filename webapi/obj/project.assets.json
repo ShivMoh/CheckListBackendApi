@@ -4856,11 +4856,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/webapi.csproj",
+      "projectUniqueName": "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/webapi.csproj",
       "projectName": "webapi",
-      "projectPath": "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/webapi.csproj",
+      "projectPath": "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/webapi.csproj",
       "packagesPath": "/home/shivesh/.nuget/packages/",
-      "outputPath": "/home/shivesh/Documents/dotnet/ChecklistBackendApi/webapi/obj/",
+      "outputPath": "/home/shivesh/Documents/dotnet/CheckListBackendApi/webapi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/shivesh/.nuget/NuGet/NuGet.Config"
