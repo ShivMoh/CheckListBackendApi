@@ -4,6 +4,8 @@ using webapi.datacontext;
 using MapsterMapper;
 using Mapster;
 using System.Reflection;
+using System.Net;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +13,8 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen();
 
 var config = TypeAdapterConfig.GlobalSettings;
 config.Scan(Assembly.GetExecutingAssembly());
@@ -31,6 +33,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 //         options.UseMySql(builder.Configuration.GetConnectionString("aws_sql"), serverVersion, mySqlOptionsAction: sqlOptions => {sqlOptions.EnableRetryOnFailure();});
 //     }
 // );
+
+// builder.Services.Configure<ForwardedHeadersOptions>(options =>
+// {
+//     options.KnownProxies.Add(IPAddress.Parse("190.108.207.117"));
+// });
+
 builder.Services.AddCors(options =>
 {   
     options.AddDefaultPolicy(
@@ -42,11 +50,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// app.UseForwardedHeaders(new ForwardedHeadersOptions
+// {
+//     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+// });
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// } 
 
 app.UseStaticFiles(new StaticFileOptions()
 {
@@ -54,10 +66,12 @@ app.UseStaticFiles(new StaticFileOptions()
  RequestPath = new PathString("/Resources")
 });
 
-app.UseHttpsRedirection();
+
+// app.UseHttpsRedirection();
+app.MapGet("/", () => "this is running still");
 app.UseRouting();
 app.UseCors();
-app.UseAuthorization();
+// app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
