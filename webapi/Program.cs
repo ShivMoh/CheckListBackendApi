@@ -21,18 +21,18 @@ config.Scan(Assembly.GetExecutingAssembly());
 services.AddSingleton(config);
 services.AddScoped<IMapper, ServiceMapper>();
 
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("local"), sqlServerOptionsAction: sqlOptions => { sqlOptions.EnableRetryOnFailure(); });
-});
+// builder.Services.AddDbContext<DataContext>(options =>
+// {
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("local"), sqlServerOptionsAction: sqlOptions => { sqlOptions.EnableRetryOnFailure(); });
+// });
 
-// var serverVersion = new MySqlServerVersion(new Version(8, 0, 35));
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 35));
 
-// builder.Services.AddDbContext<DataContext>(
-//     options => {
-//         options.UseMySql(builder.Configuration.GetConnectionString("aws_sql"), serverVersion, mySqlOptionsAction: sqlOptions => {sqlOptions.EnableRetryOnFailure();});
-//     }
-// );
+builder.Services.AddDbContext<DataContext>(
+    options => {
+        options.UseMySql(builder.Configuration.GetConnectionString("mysql"), serverVersion, mySqlOptionsAction: sqlOptions => {sqlOptions.EnableRetryOnFailure();});
+    }
+);
 
 // builder.Services.Configure<ForwardedHeadersOptions>(options =>
 // {
