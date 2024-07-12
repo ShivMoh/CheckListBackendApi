@@ -78,6 +78,9 @@ namespace webap.controllers
             cashierTask.listId = list.id; 
             cashierTask.fileContainer = _context.fileContainerType.Where(container => container.id == cashierTask.fileContainerTypeId).FirstOrDefault()!;
 
+
+            cashierChecklist.endDate = DateTime.Now;
+            cashierChecklist.submitted = true;
             
             _context.cashierTask.Update(cashierTask);
             _context.signature.Update(signature);
